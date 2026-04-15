@@ -112,8 +112,3 @@ node backend/server.js
 
 http://localhost:5000/frontend/landing.html
 
-
-<img width="1763" height="4673" alt="image" src="https://github.com/user-attachments/assets/f07a3026-aeed-42ef-b2a7-6607d491f2cd" />
-<img width="1763" height="1506" alt="image" src="https://github.com/user-attachments/assets/d54a3056-d2d7-4930-842f-2d2284564a7c" />
-<img width="1763" height="1406" alt="image" src="https://github.com/user-attachments/assets/adf53b91-709e-4f72-af1f-6778da33c31b" />
-<img width="1763" height="3132" alt="image" src="https://github.com/user-attachments/assets/d4bda460-8757-447e-bec3-e55e3d2a78a8" />
