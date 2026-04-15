@@ -1,0 +1,152 @@
+n<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Music App Home</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-green: #1db954;
+            --dark-bg: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        }
+        body { background: var(--dark-bg); }
+        .hero {
+            min-height: 60vh;
+            background: var(--dark-bg), url('images/bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            border-radius: 0 0 24px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            margin: -20px -20px 3rem -20px;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+        .section h2 { font-size: 2.2rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        @media (max-width: 768px) {
+            .main { margin-left: 0; padding: 1rem; }
+            .sidebar { transform: translateX(-100%); }
+            .hero { margin: -1rem -1rem 2rem; border-radius: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <nav class="sidebar">
+        <h2>🎵 MusicHub</h2>
+        <a href="index.html" class="active">🏠 Home</a>
+        <a href="artists.html">👤 Artists</a>
+        <a href="albums.html">💿 Albums</a>
+        <a href="playlist.html">📝 Playlists</a>
+    </nav>
+
+    <main class="main">
+        <header class="topbar">
+            <input type="text" id="searchInput" placeholder="Search songs..." style="flex: 1;">
+            <button onclick="searchTracks()">🔍</button>
+            <button onclick="toggleTheme()">🌙</button>
+        </header>
+
+        <section class="hero">
+        </section>
+
+        <section id="artists-section" class="section">
+            <h2>⭐ Featured Artists</h2>
+            <div class="grid-container" id="artists-grid">
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🎵 All Songs</h2>
+            <div class="grid-container" id="tracksContainer"></div>
+        </section>
+
+        <section class="section">
+            <h2>💿 New Releases</h2>
+            <div class="grid-container" id="albums-grid"></div>
+        </section>
+    </main>
+</div>
+
+<!-- Player Bar -->
+<footer id="player-bar" style="display: none;">
+    <div class="player-left">
+        <img id="now-playing-img" src="images/default.jpg" style="width: 56px; height: 56px; border-radius: 8px;">
+        <div>
+            <div id="now-playing-title">Pick a song</div>
+            <div id="now-playing-artist" style="font-size: 0.9rem; opacity: 0.7;">Artist</div>
+        </div>
+    </div>
+    <div class="player-center">
+        <button onclick="prevSong()">⏮</button>
+        <button id="play-pause-btn" onclick="togglePlay()">▶️</button>
+        <button onclick="nextSong()">⏭</button>
+    </div>
+    <div class="player-right">
+        <span id="current-time">0:00</span>
+        <input type="range" id="progress-slider" min="0" max="100" value="0" style="flex: 1;">
+        <span id="total-duration">0:00</span>
+    </div>
+    <select id="speedSelect" onchange="setSpeed(this.value)">
+        <option value="0.5">0.5x</option>
+        <option value="1">1x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+    </select>
+</footer>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Dynamic featured artists from API
+    fetch(`${API}/artists`)
+        .then(res => res.json())
+        .then(artists => {
+            const html = artists.slice(0,3).map(a => `
+                <div class="card" onclick="location.href='artistSongs.html?id=${a.artist_id}'">
+                    <img src="${a.image_url || 'images/default.jpg'}" class="cover" onerror="this.src='images/default.jpg'">
+                    <h3>${a.name}</h3>
+                    <p>${(a.bio || 'Artist').substring(0,60)}...</p>
+                </div>
+            `).join('');
+            document.getElementById('artists-grid').innerHTML = html;
+        });
+
+    if (window.loadTracks) window.loadTracks();
+
+    // Dynamic albums
+    fetch(`${API}/albums`)
+        .then(res => res.json())
+        .then(albums => {
+            document.getElementById('albums-grid').innerHTML = albums.slice(0,4).map(a => `
+                <div class="card" onclick="location.href='albumTracks.html?id=${a.album_id}'">
+                    <img src="${a.image_url || 'images/default.jpg'}" class="cover">
+                    <h3>${a.title}</h3>
+                    <p>${a.artist_name || 'Artist'}</p>
+                </div>
+            `).join('');
+        });
+
+    // Search
+    document.getElementById('searchInput').oninput = function() {
+        searchTracks(this.value);
+    };
+});
+
+function searchTracks(query) {
+    if (window.searchTracks) window.searchTracks(query);
+}
+
+function toggleTheme() {
+    document.body.classList.toggle('light');
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Artists - Music App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <h2>🎵 Music</h2>
+        <a href="index.html">Home</a>
+        <a href="artists.html" class="active">Artists</a>
+        <a href="albums.html">Albums</a>
+        <a href="playlist.html">Playlists</a>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+
+            <input type="text" id="artistSearch" placeholder="Search artists..." oninput="filterArtists(this.value)">
+            <button id="editToggle" onclick="toggleEditMode()">Edit</button>
+            <button onclick="toggleTheme()">🌙</button>
+            <div class="user-box">
+                <img src="images/user.png">
+                <span id="usernameDisplay"></span>
+                <button onclick="logout()">Logout</button>
+            </div>
+
+        </div>
+
+        <h1>All Artists</h1>
+        <div id="artistsContainer" class="cards"></div>
+
+        <div id="noArtists" style="text-align: center; padding: 40px; display: none;">
+            <h2>No artists found 🎤</h2>
+            <p>Start adding your favorite artists</p>
+        </div>
+
+        <div id="artistForm" class="song-form-section" style="display: none;">
+            <h3>Add Artist</h3>
+            <div class="form-grid">
+                <input id="artistName" placeholder="Artist Name">
+                <textarea id="artistBio" placeholder="Bio"></textarea>
+                <input id="artistImage" placeholder="Image URL">
+            </div>
+            <button onclick="addArtist()">Add Artist</button>
+        </div>
+
+    </div>
+
+
+</div>
+
+<!-- Player Bar -->
+<div id="playerBar">
+    <div class="player-info">
+        <img id="playerImg" src="images/default.jpg">
+        <div>
+            <h4 id="playerTitle">No song</h4>
+            <p id="playerArtist">Artist</p>
+        </div>
+    </div>
+    <div class="player-controls">
+        <button onclick="prevSong()">⏮</button>
+        <button onclick="togglePlay()" id="mainPlayBtn">▶</button>
+        <button onclick="nextSong()">⏭</button>
+    </div>
+    <div class="progress-container">
+        <span id="currentTime">0:00</span>
+        <input type="range" id="progressBar" min="0" max="100" value="0">
+        <span id="duration">0:00</span>
+    </div>
+    <select id="speedSelect" onchange="setSpeed(this.value)">
+        <option value="0.5">0.5x</option>
+        <option value="1">1x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+    </select>
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script src="artists.js"></script>
+
+</body>
+</html>

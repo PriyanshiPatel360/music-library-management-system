@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Playlist Songs</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2>🎵 Music</h2>
+        <a href="index.html">Home</a>
+        <a href="artists.html">Artists</a>
+        <a href="albums.html">Albums</a>
+        <a href="playlist.html">Playlists</a>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+        <h1 id="playlistTitle">Playlist Songs</h1>
+        <div id="songsContainer" class="cards"></div>
+    </div>
+
+</div>
+
+<!-- SINGLE CLEAN PLAYER BAR -->
+<div id="playerBar" style="display:none;">
+    <div class="player-info">
+        <img id="playerImg" src="images/default.jpg" alt="Album cover">
+        <div>
+            <h4 id="playerTitle">No song playing</h4>
+            <p id="playerArtist"></p>
+        </div>
+    </div>
+    <div class="player-controls">
+        <button onclick="togglePlay()" id="mainPlayBtn">▶️ Play</button>
+    </div>
+</div>
+
+<!-- SCRIPTS (single includes) -->
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script src="playlistSongs.js"></script>
+
+</body>
+</html>
+

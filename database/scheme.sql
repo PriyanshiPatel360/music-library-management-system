@@ -1,0 +1,192 @@
+-- CREATE DATABASE
+CREATE DATABASE music_library;
+USE music_library;
+
+-- ========================
+-- TABLES
+-- ========================
+
+CREATE TABLE artists (
+    artist_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    bio TEXT,
+    image_url VARCHAR(255)
+);
+
+CREATE TABLE genres (
+    genre_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+CREATE TABLE albums (
+    album_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100),
+    artist_id INT,
+    release_year INT,
+    image_url VARCHAR(255),
+    FOREIGN KEY (artist_id) REFERENCES artists(artist_id) ON DELETE CASCADE
+);
+
+CREATE TABLE tracks (
+    track_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100),
+    album_id INT,
+    genre_id INT,
+    duration TIME,
+    audio_url VARCHAR(255),
+    image_url VARCHAR(255),
+    FOREIGN KEY (album_id) REFERENCES albums(album_id) ON DELETE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES genres(genre_id)
+);
+
+CREATE TABLE playlists (
+    playlist_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE playlist_tracks (
+    playlist_id INT,
+    track_id INT,
+    PRIMARY KEY (playlist_id, track_id),
+    FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id) ON DELETE CASCADE,
+    FOREIGN KEY (track_id) REFERENCES tracks(track_id) ON DELETE CASCADE
+);
+
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    password VARCHAR(50)
+);
+
+CREATE TABLE favorites (
+    user_id INT,
+    track_id INT,
+    PRIMARY KEY(user_id, track_id)
+);
+
+-- ========================
+-- INSERT DATA (CORRECT ORDER)
+-- ========================
+
+-- Artists
+INSERT INTO artists (name, bio, image_url) VALUES
+('Arijit Singh', 'Indian singer', 'http://localhost:5000/images/arijit.jpg'),
+('Shreya Ghoshal', 'Playback singer', 'http://localhost:5000/images/shreya.jpg'),
+('Armaan Malik', 'Singer', 'http://localhost:5000/images/armaan.jpg'),
+('Atif Aslam', 'Singer', 'http://localhost:5000/images/atif.jpg'),
+('Neha Kakkar', 'Singer', 'http://localhost:5000/images/neha.jpg'),
+('KK', 'Legendary Bollywood singer', 'http://localhost:5000/images/kk.jpg'),
+('Sonu Nigam', 'Versatile playback singer', 'http://localhost:5000/images/sonu.jpg'),
+('Jubin Nautiyal', 'Modern romantic singer', 'http://localhost:5000/images/jubin.jpg'),
+('Diljit Dosanjh', 'Punjabi singer and actor', 'http://localhost:5000/images/diljit.jpg'),
+('Badshah', 'Indian rapper', 'http://localhost:5000/images/badshah.jpg');
+
+-- Genres
+INSERT INTO genres (name) VALUES
+('Romantic'),
+('Pop'),
+('Sad'),
+('Rock'),
+('EDM'),
+('Hip Hop'),
+('Classical'),
+('Punjabi'),
+('Indie'),
+('Lo-fi');
+
+-- Albums
+INSERT INTO albums (title, artist_id, release_year, image_url) VALUES
+('Love Album', 1, 2020, 'http://localhost:5000/images/album1.jpg'),
+('Melody Hits', 2, 2021, 'http://localhost:5000/images/album2.webp'),
+('Romantic Hits', 3, 2019, 'http://localhost:5000/images/album3.jpg'),
+('Soulful Voice', 4, 2018, 'http://localhost:5000/images/album4.jpg');
+('Soul Hits', 6, 2015, 'http://localhost:5000/images/album5.jpg'),
+('Evergreen Classics', 7, 2010, 'http://localhost:5000/images/album6.jpg'),
+('Modern Love', 8, 2022, 'http://localhost:5000/images/album7.jpg'),
+('Punjabi Vibes', 9, 2021, 'http://localhost:5000/images/album8.jpg'),
+('Rap Beats', 10, 2020, 'http://localhost:5000/images/album9.jpg'); 
+
+-- Tracks (NOW NO ERROR 🔥)
+INSERT INTO tracks (title, album_id, genre_id, duration, audio_url, image_url) VALUES
+'songs/tumhiho.mp3', 'images/tuhiho.jpg'
+('Sun Raha Hai', 1, 1, '00:05:00', 'http://localhost:5000/songs/sunrahahai.mp3', 'http://localhost:5000/images/sunrahahai.jpg'),
+('Isq Da Chehra', 2, 2, '00:03:50', 'http://localhost:5000/songs/isqdachehra.mp3', 'http://localhost:5000/images/isqdachehra.jpg'),
+('Dhurandhar Song Baloch', 3, 1, '00:04:10', 'http://localhost:5000/songs/dhurandharsongbaloch.mp3', 'http://localhost:5000/images/dhurandhar.jpg'),
+('Tufan', 4, 1, '00:04:00', 'http://localhost:5000/songs/tufan.mp3', 'http://localhost:5000/images/tufan.webp'),
+
+-- Arijit Singh (Album 1)
+('Channa Mereya', 1, 1, '00:04:50', 'http://localhost:5000/songs/channa.mp3', 'http://localhost:5000/images/channa.jpg'),
+('Raabta', 1, 1, '00:04:10', 'http://localhost:5000/songs/raabta.mp3', 'http://localhost:5000/images/raabta.jpg'),
+
+-- Shreya Ghoshal (Album 2)
+('Teri Ore', 2, 1, '00:05:20', 'http://localhost:5000/songs/teriore.mp3', 'http://localhost:5000/images/teriore.jpg'),
+('Deewani Mastani', 2, 2, '00:05:30', 'http://localhost:5000/songs/deewani.mp3', 'http://localhost:5000/images/deewani.jpg'),
+
+-- Armaan Malik (Album 3)
+('Bol Do Na Zara', 3, 1, '00:04:00', 'http://localhost:5000/songs/boldo.mp3', 'http://localhost:5000/images/boldo.jpg'),
+('Main Rahoon Ya Na Rahoon', 3, 3, '00:05:00', 'http://localhost:5000/songs/mainrahoon.mp3', 'http://localhost:5000/images/mainrahoon.jpg'),
+
+-- Atif Aslam (Album 4)
+('Jeena Jeena', 4, 1, '00:04:20', 'http://localhost:5000/songs/jeena.mp3', 'http://localhost:5000/images/jeena.jpg'),
+('Pehli Nazar Mein', 4, 1, '00:05:10', 'http://localhost:5000/songs/pehli.mp3', 'http://localhost:5000/images/pehli.jpg'),
+
+-- KK (Album 5)
+('Zara Sa', 5, 3, '00:05:00', 'http://localhost:5000/songs/zarasa.mp3', 'http://localhost:5000/images/zarasa.jpg'),
+('Khuda Jaane', 5, 1, '00:05:30', 'http://localhost:5000/songs/khudajaane.mp3', 'http://localhost:5000/images/khudajaane.jpg'),
+
+-- Sonu Nigam (Album 6)
+('Kal Ho Naa Ho', 6, 3, '00:05:20', 'http://localhost:5000/songs/kalhonaaho.mp3', 'http://localhost:5000/images/kalhonaaho.jpg'),
+('Abhi Mujh Mein Kahin', 6, 1, '00:06:00', 'http://localhost:5000/songs/abhimujh.mp3', 'http://localhost:5000/images/abhimujh.jpg'),
+
+-- Jubin Nautiyal (Album 7)
+('Lut Gaye', 7, 1, '00:04:10', 'http://localhost:5000/songs/lutgaye.mp3', 'http://localhost:5000/images/lutgaye.jpg'),
+('Tum Hi Aana', 7, 3, '00:04:20', 'http://localhost:5000/songs/tumhiaana.mp3', 'http://localhost:5000/images/tumhiaana.jpg'),
+
+-- Diljit Dosanjh (Album 8)
+('Do You Know', 8, 8, '00:03:30', 'http://localhost:5000/songs/doyouknow.mp3', 'http://localhost:5000/images/doyouknow.jpg'),
+('Proper Patola', 8, 6, '00:03:20', 'http://localhost:5000/songs/proper.mp3', 'http://localhost:5000/images/proper.jpg'),
+
+-- Badshah (Album 8 or new)
+('DJ Waley Babu', 8, 6, '00:03:10', 'http://localhost:5000/songs/djwaley.mp3', 'http://localhost:5000/images/djwaley.jpg'),
+
+
+
+-- Playlist
+INSERT INTO playlists (name) VALUES ('My Favorites');
+
+INSERT INTO playlist_tracks VALUES (1,1),(1,2);
+
+-- ========================
+-- QUERIES
+-- ========================
+
+-- Search by title
+SELECT * FROM tracks WHERE title LIKE '%Tum%';
+
+-- Search by artist
+SELECT t.*
+FROM tracks t
+JOIN albums al ON t.album_id = al.album_id
+JOIN artists ar ON al.artist_id = ar.artist_id
+WHERE ar.name LIKE '%Arijit%';
+
+-- Search by genre
+SELECT t.*
+FROM tracks t
+JOIN genres g ON t.genre_id = g.genre_id
+WHERE g.name = 'Pop';
+
+SELECT t.*
+FROM playlist_tracks pt
+JOIN tracks t ON pt.track_id = t.track_id
+WHERE pt.playlist_id = ?
+
+
+-- Analytics
+SELECT g.name, COUNT(*) AS total
+FROM tracks t
+JOIN genres g ON t.genre_id = g.genre_id
+GROUP BY g.name
+ORDER BY total DESC
+LIMIT 1;

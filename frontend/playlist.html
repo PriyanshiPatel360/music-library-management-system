@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Playlist</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <h2>🎵 Music</h2>
+        <a href="index.html">Home</a>
+        <a href="artists.html">Artists</a>
+        <a href="albums.html">Albums</a>
+        <a href="playlist.html">Playlists</a>
+    </div>
+
+    <div class="main">
+
+        <h1>Playlists</h1>
+
+        <input type="text" id="playlistName" placeholder="Playlist name">
+        <button onclick="createPlaylist()">Create</button>
+
+        <div id="playlistContainer" class="cards"></div>
+
+        <h2>Add Songs to Playlist</h2>
+        <div id="tracksContainer" class="cards"></div>
+
+    </div>
+
+</div>
+
+<script src="config.js"></script>
+<script src="playlists.js"></script>
+
+</body>
+</html>
