@@ -5,7 +5,7 @@ A full-stack music web application where users can explore songs, view artists &
 
 ---
 
-## 🚀 Features
+## Features
 
 - 🎧 Play songs with built-in audio player  
 - 👨‍🎤 Browse artists and their songs  
@@ -108,7 +108,7 @@ node backend/server.js
 
 6️⃣ Open App
 
-👉 Open in browser:
+-> Open in browser:
 
 http://localhost:5000/frontend/landing.html
 
