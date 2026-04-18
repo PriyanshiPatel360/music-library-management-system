@@ -85,7 +85,13 @@ INSERT INTO artists (name, bio, image_url) VALUES
 ('A R Rahman', 'Music legend', 'http://localhost:5000/images/arrahman.jpg'),
 ('Stebin Ben', 'Modern singer', 'http://localhost:5000/images/stebin.jpg'),
 ('Kishore Kumar', 'Legendary singer', 'http://localhost:5000/images/kishore.jpg'),
-('Nusrat Fateh Ali Khan', 'Qawwali legend', 'http://localhost:5000/images/nusrat.jpg');
+('Nusrat Fateh Ali Khan', 'Qawwali legend', 'http://localhost:5000/images/nusrat.jpg'),
+('Faheem Abdullah', 'Singer', 'http://localhost:5000/images/faheem.jpg'),
+('Afusic', 'Singer', 'http://localhost:5000/images/afusic.jpg'),
+('Flipperachi', 'Singer', 'http://localhost:5000/images/flipperachi.jpg'),
+('Samantha Prabhu', 'Actress and singer', 'http://localhost:5000/images/samantha.jpg'),
+('Alka Yagnik', '90s Bollywood singer', 'http://localhost:5000/images/alka.jpg'),
+('Sunidhi Chuhan', 'Singer', 'http://localhost:5000/images/sunidi.jpg');
 
 -- Genres
 INSERT INTO genres (name) VALUES
@@ -122,76 +128,73 @@ INSERT INTO albums (title, artist_id, release_year, image_url) VALUES
 
 -- Tracks (NOW NO ERROR 🔥)
 INSERT INTO tracks (title, album_id, genre_id, duration, audio_url, image_url) VALUES
-'songs/tumhiho.mp3', 'images/tuhiho.jpg'
-('Sun Raha Hai', 1, 1, '00:05:00', 'http://localhost:5000/songs/sunrahahai.mp3', 'http://localhost:5000/images/sunrahahai.jpg'),
-('Isq Da Chehra', 2, 2, '00:03:50', 'http://localhost:5000/songs/isqdachehra.mp3', 'http://localhost:5000/images/isqdachehra.jpg'),
-('Dhurandhar Song Baloch', 3, 1, '00:04:10', 'http://localhost:5000/songs/dhurandharsongbaloch.mp3', 'http://localhost:5000/images/dhurandhar.jpg'),
-('Tufan', 4, 1, '00:04:00', 'http://localhost:5000/songs/tufan.mp3', 'http://localhost:5000/images/tufan.webp'),
+-- Flipperachi
+('Dhurandhar Song Baloch', 9, 4, '00:04:10', 'http://localhost:5000/songs/dhurandharsongbaloch.mp3', 'http://localhost:5000/images/dhurandhar.jpg'),
+
+-- Samantha Prabhu
+('Tufan', 9, 2, '00:04:00', 'http://localhost:5000/songs/tufan.mp3', 'http://localhost:5000/images/tufan.webp'),
 
 -- Arijit Singh (Album 1)
-('Channa Mereya', 1, 1, '00:04:50', 'http://localhost:5000/songs/channa.mp3', 'http://localhost:5000/images/channa.jpg'),
-('Raabta', 1, 1, '00:04:10', 'http://localhost:5000/songs/raabta.mp3', 'http://localhost:5000/images/raabta.jpg'),
+('Channa Mereya', 11, 1, '00:04:50', 'http://localhost:5000/songs/channa.mp3', 'http://localhost:5000/images/channa.jpg'),
+('Sun Raha Hai', 1, 1, '00:05:00', 'http://localhost:5000/songs/sunrahahai.mp3', 'http://localhost:5000/images/sunrahahai.jpg'),
+('Tum Hi Ho', 1, 1, '00:04:00', 'http://localhost:5000/songs/tumhiho.mp3', 'http://localhost:5000/images/tumhiho.jpg'),
+('Sanam Ko Apna Banane', 1, 1, '00:05:00', 'http://localhost:5000/songs/sanam.mp3', 'http://localhost:5000/images/sanam.jpg'),
 
 -- Shreya Ghoshal (Album 2)
 ('Teri Ore', 2, 1, '00:05:20', 'http://localhost:5000/songs/teriore.mp3', 'http://localhost:5000/images/teriore.jpg'),
-('Deewani Mastani', 2, 2, '00:05:30', 'http://localhost:5000/songs/deewani.mp3', 'http://localhost:5000/images/deewani.jpg'),
+('Deewani Mastani', 2, 7, '00:05:30', 'http://localhost:5000/songs/deewani.mp3', 'http://localhost:5000/images/deewani.jpg'),
+('Isq Da Chehra', 2, 5, '00:03:50', 'http://localhost:5000/songs/isqdachehra.mp3', 'http://localhost:5000/images/isqdachehra.jpg'),
+('Raabta', 2, 1, '00:04:10', 'http://localhost:5000/songs/raabta.mp3', 'http://localhost:5000/images/raabta.jpg'),
 
 -- Armaan Malik (Album 3)
 ('Bol Do Na Zara', 3, 1, '00:04:00', 'http://localhost:5000/songs/boldo.mp3', 'http://localhost:5000/images/boldo.jpg'),
 ('Main Rahoon Ya Na Rahoon', 3, 3, '00:05:00', 'http://localhost:5000/songs/mainrahoon.mp3', 'http://localhost:5000/images/mainrahoon.jpg'),
 
 -- Atif Aslam (Album 4)
-('Pehli Nazar Mein', 4, 1, '00:05:10', 'http://localhost:5000/songs/pehli.mp3', 'http://localhost:5000/images/pehli.jpg'),
+('Pehli Nazar Mein', 10, 1, '00:05:10', 'http://localhost:5000/songs/pehli.mp3', 'http://localhost:5000/images/pehli.jpg'),
+('Tera Hone Laga Hoon', 10, 1, '00:04:00', 'http://localhost:5000/songs/tera.mp3', 'http://localhost:5000/images/tera.jpg'),
+('Dil Diyan Gallan', 10, 1, '00:05:00', 'http://localhost:5000/songs/dilgalan.mp3', 'http://localhost:5000/images/dilgalan.jpg'),
+('Dil Meri Na Sune', 10, 1, '00:04:30', 'http://localhost:5000/songs/dilmeri.mp3', 'http://localhost:5000/images/dilmeri.jpg'),
+('Dheere Dheere Se', 10, 1, '00:05:00', 'http://localhost:5000/songs/dheere.mp3', 'http://localhost:5000/images/dheere.jpg'),
 
 -- KK (Album 5)
-('Zara Sa', 5, 3, '00:05:00', 'http://localhost:5000/songs/zarasa.mp3', 'http://localhost:5000/images/zarasa.jpg'),
-('Khuda Jaane', 5, 1, '00:05:30', 'http://localhost:5000/songs/khudajaane.mp3', 'http://localhost:5000/images/khudajaane.jpg'),
+('Zara Sa', 4, 3, '00:05:00', 'http://localhost:5000/songs/zarasa.mp3', 'http://localhost:5000/images/zarasa.jpg'),
+('Khuda Jaane', 4, 1, '00:05:30', 'http://localhost:5000/songs/khudajaane.mp3', 'http://localhost:5000/images/khudajaane.jpg'),
 
 -- Sonu Nigam (Album 6)
-('Kal Ho Naa Ho', 6, 3, '00:05:20', 'http://localhost:5000/songs/kalhonaaho.mp3', 'http://localhost:5000/images/kalhonaaho.jpg'),
-('Abhi Mujh Mein Kahin', 6, 1, '00:06:00', 'http://localhost:5000/songs/abhimujh.mp3', 'http://localhost:5000/images/abhimujh.jpg'),
+('Kal Ho Naa Ho', 14, 3, '00:05:20', 'http://localhost:5000/songs/kalhonaaho.mp3', 'http://localhost:5000/images/kalhonaaho.jpg'),
+('Abhi Mujh Mein Kahin', 14, 3, '00:06:00', 'http://localhost:5000/songs/abhimujh.mp3', 'http://localhost:5000/images/abhimujh.jpg'),
+('Tumhe Jo Maine Dekha', 14, 4, '00:05:20', 'http://localhost:5000/songs/tumhe.mp3', 'http://localhost:5000/images/tumhe.jpg'),
 
 -- Jubin Nautiyal (Album 7)
 ('Lut Gaye', 8, 1, '00:04:10', 'http://localhost:5000/songs/lutgaye.mp3', 'http://localhost:5000/images/lutgaye.jpg'),
-('Tum Hi Aana', 7, 3, '00:04:20', 'http://localhost:5000/songs/tumhiaana.mp3', 'http://localhost:5000/images/tumhiaana.jpg'),
+('Tum Hi Aana', 8, 3, '00:04:20', 'http://localhost:5000/songs/tumhiaana.mp3', 'http://localhost:5000/images/tumhiaana.jpg'),
 
-
--- Atif Aslam
-('Tera Hone Laga Hoon', 4, 1, '00:04:00', 'http://localhost:5000/songs/tera.mp3', 'http://localhost:5000/images/tera.jpg'),
-('Dil Diyan Gallan', 4, 1, '00:05:00', 'http://localhost:5000/songs/dilgalan.mp3', 'http://localhost:5000/images/dilgalan.jpg'),
-
--- Arijit Singh
-('Dil Meri Na Sune', 1, 1, '00:04:30', 'http://localhost:5000/songs/dilmeri.mp3', 'http://localhost:5000/images/dilmeri.jpg'),
-('Sanam Ko Apna Banane', 1, 1, '00:05:00', 'http://localhost:5000/songs/sanam.mp3', 'http://localhost:5000/images/sanam.jpg'),
-
--- Sonu Nigam
-('Tumhe Jo Maine Dekha', 7, 1, '00:05:20', 'http://localhost:5000/songs/tumhe.mp3', 'http://localhost:5000/images/tumhe.jpg'),
 
 -- Kumar Sanu
-('Us Ladki Pe Dil Aaya Hai', 11, 3, '00:05:00', 'http://localhost:5000/songs/usladki.mp3', 'http://localhost:5000/images/usladki.jpg'),
-('Pehli Pehli Baar Mohabbat Ki Hai', 11, 1, '00:04:40', 'http://localhost:5000/songs/pehlipheli.mp3', 'http://localhost:5000/images/pehlipheli.jpg'),
+('Us Ladki Pe Dil Aaya Hai', 12, 1, '00:05:00', 'http://localhost:5000/songs/usladki.mp3', 'http://localhost:5000/images/usladki.jpg'),
+('Pehli Pehli Baar Mohabbat Ki Hai', 12, 1, '00:04:40', 'http://localhost:5000/songs/pehlipheli.mp3', 'http://localhost:5000/images/pehlipheli.jpg'),
+('Aap Ka Aana Dil Dhadkana', 12, 1, '00:05:00', 'http://localhost:5000/songs/aapka.mp3', 'http://localhost:5000/images/aapka.jpg'),
 
 -- A R Rahman
-('Dil Hai Chota Sa', 12, 2, '00:04:20', 'http://localhost:5000/songs/dilhchota.mp3', 'http://localhost:5000/images/dilhchota.jpg'),
-('Taal Se Taal Mila', 12, 2, '00:05:30', 'http://localhost:5000/songs/taal.mp3', 'http://localhost:5000/images/taal.jpg'),
+('Dil Hai Chota Sa', 13, 7, '00:04:20', 'http://localhost:5000/songs/dilhchota.mp3', 'http://localhost:5000/images/dilhchota.jpg'),
+('Taal Se Taal Mila', 13, 7, '00:05:30', 'http://localhost:5000/songs/taal.mp3', 'http://localhost:5000/images/taal.jpg'),
 
 -- Stebin Ben
-('Tum Jo Aaye Yaara', 13, 1, '00:04:00', 'http://localhost:5000/songs/tumjoaye.mp3', 'http://localhost:5000/images/tumjoaye.jpg'),
+('Tum Jo Aaye Yaara', 15, 1, '00:04:00', 'http://localhost:5000/songs/tumjoaye.mp3', 'http://localhost:5000/images/tumjoaye.jpg'),
 
 -- Kishore Kumar
-('Saiyaara Tu Badla Nahi (Old)', 14, 3, '00:05:10', 'http://localhost:5000/songs/saiyaara_old.mp3', 'http://localhost:5000/images/saiyaara_old.jpg'),
+('Saiyaara Tu Badla Nahi (Old)', 16, 7, '00:05:10', 'http://localhost:5000/songs/saiyaara_old.mp3', 'http://localhost:5000/images/saiyaara_old.jpg'),
 
--- Modern Version
-('Saiyaara Tu Badla Nahi (New)', 15, 1, '00:04:10', 'http://localhost:5000/songs/saiyaara_new.mp3', 'http://localhost:5000/images/saiyaara_new.jpg'),
+-- Faheem Abdullah
+('Saiyaara Tu Badla Nahi (New)', 1, 1, '00:04:10', 'http://localhost:5000/songs/saiyaara_new.mp3', 'http://localhost:5000/images/saiyaara_new.jpg'),
 
--- Others
-('Dheere Dheere Se', 4, 1, '00:05:00', 'http://localhost:5000/songs/dheere.mp3', 'http://localhost:5000/images/dheere.jpg'),
-('Pal Pal Jeena Muhal', 2, 1, '00:04:30', 'http://localhost:5000/songs/palpal.mp3', 'http://localhost:5000/images/palpal.jpg'),
-('Aap Ka Aana Dil Dhadkana', 11, 2, '00:05:00', 'http://localhost:5000/songs/aapka.mp3', 'http://localhost:5000/images/aapka.jpg'),
+-- Afusic
+('Pal Pal Jeena Muhal', 4, 3, '00:04:30', 'http://localhost:5000/songs/palpal.mp3', 'http://localhost:5000/images/palpal.jpg'),
 
--- Sufi
-('Afreen Afreen', 15, 2, '00:06:00', 'http://localhost:5000/songs/afreen.mp3', 'http://localhost:5000/images/afreen.jpg'),
-('Nit Khair Manga', 15, 2, '00:06:30', 'http://localhost:5000/songs/nitkhair.mp3', 'http://localhost:5000/images/nitkhair.jpg');
+-- Nusrat Fateh Ali Khan
+('Afreen Afreen', 17, 7, '00:06:00', 'http://localhost:5000/songs/afreen.mp3', 'http://localhost:5000/images/afreen.jpg'),
+('Nit Khair Manga', 17, 1, '00:06:30', 'http://localhost:5000/songs/nitkhair.mp3', 'http://localhost:5000/images/nitkhair.jpg');
 
 
 -- Playlist
