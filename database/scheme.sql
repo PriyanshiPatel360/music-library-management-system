@@ -30,11 +30,14 @@ CREATE TABLE albums (
 CREATE TABLE tracks (
     track_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100),
-    album_id INT,
+    artist_name VARCHAR(100),
+    artist_id INT,
+    album_id INT NULL,
     genre_id INT,
     duration TIME,
     audio_url VARCHAR(255),
     image_url VARCHAR(255),
+    FOREIGN KEY (artist_id) REFERENCES artists(artist_id) ON DELETE CASCADE,
     FOREIGN KEY (album_id) REFERENCES albums(album_id) ON DELETE CASCADE,
     FOREIGN KEY (genre_id) REFERENCES genres(genre_id)
 );
@@ -64,6 +67,12 @@ CREATE TABLE favorites (
     track_id INT,
     PRIMARY KEY(user_id, track_id)
 );
+
+-- NEW FOR USER TRACKS: Add owner_id column + timestamps
+ALTER TABLE tracks ADD COLUMN owner_id INT NULL AFTER image_url,
+ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE tracks ADD FOREIGN KEY (owner_id) REFERENCES users(user_id) ON DELETE SET NULL;
+
 
 -- ========================
 -- INSERT DATA (CORRECT ORDER)
@@ -225,7 +234,7 @@ WHERE g.name = 'Pop';
 SELECT t.*
 FROM playlist_tracks pt
 JOIN tracks t ON pt.track_id = t.track_id
-WHERE pt.playlist_id = ?
+WHERE pt.playlist_id = 1;
 
 
 -- Analytics

@@ -19,11 +19,14 @@ async function login() {
 
         if (data.success) {
             localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("token", data.token);
+
             showToast("Login successful!");
             window.location.href = "index.html";
         } else {
             showToast("Invalid credentials");
         }
+
     } catch (err) {
         console.error(err);
         showToast("Login failed - check server");

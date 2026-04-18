@@ -3,12 +3,20 @@
 // Global edit mode
 window.isArtistEditMode = false;
 
-// Toggle edit mode
 window.toggleEditMode = function() {
     window.isArtistEditMode = !window.isArtistEditMode;
     const btn = document.getElementById('editToggle');
-    btn.textContent = window.isArtistEditMode ? 'Done' : 'Edit';
-    document.getElementById('artistForm').style.display = window.isArtistEditMode ? 'block' : 'none';
+    btn.textContent = window.isArtistEditMode ? 'Done' : 'Edit Mode';
+    if(window.isArtistEditMode) {
+        document.getElementById('artistForm').classList.add('active');
+    } else {
+        document.getElementById('artistForm').classList.remove('active');
+        document.getElementById('artistName').value = '';
+        document.getElementById('artistBio').value = '';
+        document.getElementById('artistImage').value = '';
+        document.getElementById('submitArtistBtn').textContent = 'Add Artist';
+        document.getElementById('submitArtistBtn').onclick = addArtist;
+    }
     loadArtists();
     window.showToast(window.isArtistEditMode ? 'Edit mode ON' : 'Edit mode OFF');
 };
@@ -28,9 +36,12 @@ window.addArtist = async function() {
             body: JSON.stringify({name, bio, image_url: image})
         });
         if (res.ok) {
-            document.getElementById('artistForm').reset();
+            document.getElementById('artistName').value = '';
+            document.getElementById('artistBio').value = '';
+            document.getElementById('artistImage').value = '';
             loadArtists();
-            window.showToast('Artist added 🎤');
+            window.showToast("Artist added <span class='material-symbols-outlined'>mic</span>");
+            document.getElementById('artistForm').classList.remove('active');
         } else {
             const err = await res.json();
             window.showToast('Error: ' + (err.error || 'Failed'));
@@ -60,7 +71,7 @@ async function loadArtists() {
     const container = document.getElementById("artistsContainer");
     if (!container) return;
 
-    container.innerHTML = "<div style='grid-column: 1/-1; text-align:center; padding:40px; color:#ccc'>Loading artists... 🎤</div>";
+    container.innerHTML = "<div style='grid-column: 1/-1; text-align:center; padding:40px; color:#ccc'>Loading artists... <span class='material-symbols-outlined'>mic</span></div>";
 
     try {
         const res = await fetch(`${API}/artists`);
@@ -78,13 +89,17 @@ async function loadArtists() {
             let editBtn = '';
             if (window.isArtistEditMode) {
                 editBtn = `
-                    <div class="card-actions">
-                        <button class="delete-btn" onclick="deleteArtist(${a.artist_id}, '${safeName}')" title="Delete">🗑️</button>
+                    <div class="card-actions" onclick="event.stopPropagation()">
+                        <button class="edit-btn" onclick="startEditArtist(${a.artist_id}, '${safeName}', '${a.bio ? a.bio.replace(/'/g, "\\'") : ''}', '${img}', event)" title="Edit">✏️</button>
+                        <button class="delete-btn" onclick="deleteArtist(${a.artist_id}, '${safeName}')" title="Delete"><span class="material-symbols-outlined">delete</span></button>
                     </div>`;
             }
             return `
-                <div class="card" onclick="viewArtist(${a.artist_id})">
-                    <img src="${img}" class="cover" onerror="this.src='images/default.jpg'" alt="${a.name}">
+                <div class="card artist-card" onclick="viewArtist(${a.artist_id})">
+                    <div class="cover-container">
+                        <img src="${img}" class="cover" onerror="this.src='images/default.jpg'" alt="${a.name}">
+                        <button class="overlay-play-btn" onclick="playTopSong(${a.artist_id}, '${safeName}'); event.stopPropagation();"><span class="material-symbols-outlined">play_arrow</span></button>
+                    </div>
                     <h3>${a.name}</h3>
                     <p>${bioPreview}</p>
                     ${editBtn}
@@ -139,6 +154,48 @@ async function playTopSong(artistId, artistName) {
     } catch (e) {
         console.error(e);
         showToast('Failed to load artist songs');
+    }
+}
+
+// Edit Artist
+window.startEditArtist = function(id, name, bio, img, e) {
+    if(e) e.stopPropagation();
+    window.currentEditingArtistId = id;
+    document.getElementById('artistName').value = name;
+    document.getElementById('artistBio').value = bio || '';
+    document.getElementById('artistImage').value = img || '';
+    document.getElementById('submitArtistBtn').textContent = 'Update Artist';
+    document.getElementById('submitArtistBtn').onclick = () => saveEditArtist(id);
+    document.getElementById('artistForm').classList.add('active');
+};
+
+window.saveEditArtist = async function(id) {
+    const name = document.getElementById('artistName').value.trim();
+    const bio = document.getElementById('artistBio').value.trim();
+    const image = document.getElementById('artistImage').value.trim();
+    if (!name) return window.showToast('Name required');
+
+    try {
+        const res = await fetch(`${API}/artists/${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name, bio, image_url: image})
+        });
+        if (res.ok) {
+            window.showToast("Artist updated <span class='material-symbols-outlined'>mic</span>");
+            document.getElementById('artistName').value = '';
+            document.getElementById('artistBio').value = '';
+            document.getElementById('artistImage').value = '';
+            document.getElementById('submitArtistBtn').textContent = 'Add Artist';
+            document.getElementById('submitArtistBtn').onclick = addArtist;
+            document.getElementById('artistForm').classList.remove('active');
+            loadArtists();
+        } else {
+            const err = await res.json();
+            window.showToast('Error: ' + err.error);
+        }
+    } catch (e) {
+        window.showToast('Update failed');
     }
 }
 

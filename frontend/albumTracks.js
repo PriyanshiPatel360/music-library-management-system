@@ -2,7 +2,7 @@
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-// 🎵 LOAD ALBUM SONGS
+// <span class="material-symbols-outlined">music_note</span> LOAD ALBUM SONGS
 async function loadAlbumSongs() {
 
     const container = document.getElementById("songsContainer");
@@ -14,28 +14,23 @@ async function loadAlbumSongs() {
 
         // 🧠 Empty state
         if (!data || data.length === 0) {
-            container.innerHTML = "<h2>No songs found in this album 🎵</h2>";
+            container.innerHTML = "<h2>No songs found in this album <span class='material-symbols-outlined'>music_note</span></h2>";
             return;
         }
 
         let html = "";
 
         data.forEach(track => {
+            const safeTitle = track.title.replace(/'/g, "\\'");
+            const safeArtist = (track.artist || 'Unknown').replace(/'/g, "\\'");
             html += `
-<div class="card">
-
-    <div class="img-container">
+<div class="card" data-track-id="${track.track_id}">
+    <div class="cover-container">
         <img src="${track.image_url || 'images/default.jpg'}" class="cover">
-
-        <button onclick="playSongGlobal('${track.title}', '${track.artist || 'Unknown'}', '${track.image_url}', '${track.audio_url}')">
-            ▶ Play
-        </button>
+        <button class="overlay-play-btn" onclick="playSongGlobal('${safeTitle}', '${safeArtist}', '${track.image_url || ''}', '${track.audio_url}'); event.stopPropagation();"><span class="material-symbols-outlined">play_arrow</span></button>
     </div>
-
     <h3>${track.title}</h3>
-    <p>Album: ${track.album}</p>
-    <p>Genre: ${track.genre}</p>
-
+    <p>${track.album || 'Unknown Album'} • ${track.genre || 'Unknown Genre'}</p>
 </div>
 `;
         });

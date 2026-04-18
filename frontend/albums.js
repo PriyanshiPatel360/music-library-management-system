@@ -10,7 +10,7 @@ async function loadAlbums() {
 
         // 🧠 Empty state
         if (!data || data.length === 0) {
-            container.innerHTML = "<h2>No albums found 🎵</h2>";
+            container.innerHTML = "<h2>No albums found <span class='material-symbols-outlined'>music_note</span></h2>";
             return;
         }
 
@@ -18,16 +18,14 @@ async function loadAlbums() {
 
         data.forEach(a => {
             html += `
-            <div class="card" onclick="openAlbum(${a.album_id})">
-
-                <div class="img-container">
-                    <img src="${a.image_url}" class="cover">
+                <div class="card" onclick="location.href='albumTracks.html?id=${a.album_id}'">
+                    <div class="cover-container">
+                        <img src="${a.image_url || 'images/default.jpg'}" class="cover">
+                        <button class="overlay-play-btn"><span class="material-symbols-outlined">play_arrow</span></button>
+                    </div>
+                    <h3>${a.title}</h3>
+                    <p>${a.artist_name || 'Artist'}</p>
                 </div>
-
-                <h3>${a.title}</h3>
-                <p>Year: ${a.release_year}</p>
-
-            </div>
             `;
         });
 

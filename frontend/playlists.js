@@ -1,7 +1,7 @@
 // 🔥 GLOBAL
 let selectedPlaylist = null;
 
-// 🎵 LOAD PLAYLISTS
+// <span class="material-symbols-outlined">music_note</span> LOAD PLAYLISTS
 async function loadPlaylists() {
     try {
         const res = await fetch(`${API}/playlists`);
@@ -12,10 +12,14 @@ async function loadPlaylists() {
         data.forEach(p => {
             html += `
             <div class="card" onclick="selectPlaylist(${p.playlist_id})" ondblclick="openPlaylist(${p.playlist_id})">
+                <div class="cover-container">
+                    <img src="images/default.jpg" class="cover">
+                    <button class="overlay-play-btn"><span class="material-symbols-outlined">play_arrow</span></button>
+                </div>
                 <h3>${p.name}</h3>
-                <button onclick="deletePlaylist(${p.playlist_id}); event.stopPropagation();">
-                    Delete
-                </button>
+                <div class="card-actions">
+                    <button onclick="deletePlaylist(${p.playlist_id}); event.stopPropagation();" title="Delete"><span class="material-symbols-outlined">delete</span></button>
+                </div>
             </div>`;
         });
 
@@ -40,7 +44,7 @@ function openPlaylist(id) {
     window.location.href = `playlistSongs.html?id=${id}`;
 }
 
-// 🎵 LOAD TRACKS FOR ADDING
+// <span class="material-symbols-outlined">music_note</span> LOAD TRACKS FOR ADDING
 async function loadTracks() {
     try {
         const res = await fetch(`${API}/tracks`);
@@ -51,12 +55,12 @@ async function loadTracks() {
         data.forEach(track => {
             html += `
             <div class="card">
-                <img src="${track.image_url}" class="cover">
+                <div class="cover-container">
+                    <img src="${track.image_url}" class="cover" onerror="this.src='images/default.jpg'">
+                    <button class="overlay-play-btn" onclick="addToPlaylist(${track.track_id}); event.stopPropagation();" title="Add to Playlist"><span class="material-symbols-outlined">add</span></button>
+                </div>
                 <h3>${track.title}</h3>
                 <p>${track.album}</p>
-                <button onclick="addToPlaylist(${track.track_id}); event.stopPropagation();">
-                    ➕ Add
-                </button>
             </div>`;
         });
 
@@ -67,7 +71,7 @@ async function loadTracks() {
     }
 }
 
-// ➕ ADD SONG
+// <span class="material-symbols-outlined">add</span> ADD SONG
 async function addToPlaylist(trackId) {
     if (!selectedPlaylist) {
         showToast("Select a playlist first!");
@@ -85,7 +89,7 @@ async function addToPlaylist(trackId) {
         });
 
         if (res.ok) {
-            showToast("Added to playlist 🎵");
+            showToast("Added to playlist <span class='material-symbols-outlined'>music_note</span>");
         } else {
             showToast("Failed to add");
         }
@@ -107,7 +111,7 @@ async function deletePlaylist(id) {
     }
 }
 
-// ➕ CREATE PLAYLIST
+// <span class="material-symbols-outlined">add</span> CREATE PLAYLIST
 async function createPlaylist() {
     const name = document.getElementById("playlistName").value.trim();
     if (!name) return showToast("Enter name");

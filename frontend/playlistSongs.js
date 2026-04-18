@@ -30,19 +30,19 @@ async function loadPlaylistSongs() {
         let html = "";
 
         tracks.forEach(track => {
+            const safeTitle = track.title.replace(/'/g, "\\'");
+            const safeArtist = (track.artist || 'Unknown').replace(/'/g, "\\'");
             html += `
-            <div class="card">
-                <div class="img-container">
+            <div class="card" data-track-id="${track.track_id}">
+                <div class="cover-container">
                     <img src="${track.image_url || 'images/default.jpg'}" class="cover">
-                    <button onclick="playSongGlobal('${track.title}', '${track.artist || 'Unknown'}', '${track.image_url || 'images/default.jpg'}', '${track.audio_url}')">
-                        ▶ Play
-                    </button>
+                    <button class="overlay-play-btn" onclick="playSongGlobal('${safeTitle}', '${safeArtist}', '${track.image_url || ''}', '${track.audio_url}'); event.stopPropagation();"><span class="material-symbols-outlined">play_arrow</span></button>
                 </div>
                 <h3>${track.title}</h3>
                 <p>${track.album || 'N/A'}</p>
-                <button onclick="removeSong(${track.track_id})">
-                    ❌ Remove
-                </button>
+                <div class="card-actions">
+                    <button class="delete-btn" onclick="removeSong(${track.track_id}); event.stopPropagation();" title="Remove"><span class="material-symbols-outlined">close</span></button>
+                </div>
             </div>`;
         });
 
@@ -54,7 +54,7 @@ async function loadPlaylistSongs() {
 }
 
 // REMOVE SONG
-async function removeSong(trackId) {
+window.removeSong = async function(trackId) {
     if (!confirm("Remove from playlist?")) return;
 
     try {
@@ -68,10 +68,10 @@ async function removeSong(trackId) {
         });
         if (res.ok) {
             loadPlaylistSongs();
-            showToast("Removed");
+            window.showToast("Removed");
         }
     } catch (err) {
-        showToast("Remove failed");
+        window.showToast("Remove failed");
     }
 }
 

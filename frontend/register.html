@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Register</title>
     <link rel="stylesheet" href="style.css">
 
@@ -8,22 +9,27 @@
 </head>
 <body class="auth-bg">
 
-<div class="auth-box">
-    <h2>Register</h2>
+<div class="split-screen">
+    <div class="split-left" style="background-image: url('images/register_bg.png');"></div>
+    <div class="split-right">
+        <div class="auth-box">
+            <h2><span class="material-symbols-outlined">how_to_reg</span> Register</h2>
 
-    <div class="input-group">
-        <i class="fas fa-user"></i>
-        <input type="text" id="username" placeholder="Username">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="username" placeholder="Username">
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Password">
+            </div>
+
+            <button onclick="register()">Create Account</button>
+
+            <p>Already have an account? <a href="login.html">Login</a></p>
+        </div>
     </div>
-
-    <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input type="password" id="password" placeholder="Password">
-    </div>
-
-    <button onclick="register()">Register</button>
-
-    <p>Already have account? <a href="login.html">Login</a></p>
 </div>
 <script src="config.js"></script>
 <script src="app.js"></script>

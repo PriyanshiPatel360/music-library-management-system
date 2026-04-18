@@ -16,9 +16,11 @@ async function register() {
 
         const data = await res.json();
 
-        if (data.success !== false) {
-            showToast("Registered! Please login.");
-            window.location.href = "login.html";
+        if (data.success !== false && data.token) {
+            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("token", data.token);
+            showToast("Registered && logged in!");
+            window.location.href = "index.html";
         } else {
             showToast("Registration failed");
         }
