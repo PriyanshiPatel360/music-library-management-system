@@ -80,7 +80,12 @@ INSERT INTO artists (name, bio, image_url) VALUES
 ('Sonu Nigam', 'Versatile playback singer', 'http://localhost:5000/images/sonu.jpg'),
 ('Jubin Nautiyal', 'Modern romantic singer', 'http://localhost:5000/images/jubin.jpg'),
 ('Diljit Dosanjh', 'Punjabi singer and actor', 'http://localhost:5000/images/diljit.jpg'),
-('Badshah', 'Indian rapper', 'http://localhost:5000/images/badshah.jpg');
+('Badshah', 'Indian rapper', 'http://localhost:5000/images/badshah.jpg'),
+('Kumar Sanu', '90s Bollywood singer', 'http://localhost:5000/images/kumar.jpg'),
+('A R Rahman', 'Music legend', 'http://localhost:5000/images/arrahman.jpg'),
+('Stebin Ben', 'Modern singer', 'http://localhost:5000/images/stebin.jpg'),
+('Kishore Kumar', 'Legendary singer', 'http://localhost:5000/images/kishore.jpg'),
+('Nusrat Fateh Ali Khan', 'Qawwali legend', 'http://localhost:5000/images/nusrat.jpg');
 
 -- Genres
 INSERT INTO genres (name) VALUES
@@ -100,12 +105,20 @@ INSERT INTO albums (title, artist_id, release_year, image_url) VALUES
 ('Love Album', 1, 2020, 'http://localhost:5000/images/album1.jpg'),
 ('Melody Hits', 2, 2021, 'http://localhost:5000/images/album2.webp'),
 ('Romantic Hits', 3, 2019, 'http://localhost:5000/images/album3.jpg'),
-('Soulful Voice', 4, 2018, 'http://localhost:5000/images/album4.jpg');
+('Soulful Voice', 4, 2018, 'http://localhost:5000/images/album4.jpg'),
 ('Soul Hits', 6, 2015, 'http://localhost:5000/images/album5.jpg'),
 ('Evergreen Classics', 7, 2010, 'http://localhost:5000/images/album6.jpg'),
 ('Modern Love', 8, 2022, 'http://localhost:5000/images/album7.jpg'),
 ('Punjabi Vibes', 9, 2021, 'http://localhost:5000/images/album8.jpg'),
-('Rap Beats', 10, 2020, 'http://localhost:5000/images/album9.jpg'); 
+('Rap Beats', 10, 2020, 'http://localhost:5000/images/album9.jpg'), 
+('Atif Hits', 4, 2010, 'http://localhost:5000/images/album10.jpg'),
+('Arijit Hits', 1, 2015, 'http://localhost:5000/images/album11.jpg'),
+('90s Classics', 11, 1995, 'http://localhost:5000/images/album12.jpg'),
+('AR Rahman Hits', 12, 2000, 'http://localhost:5000/images/album13.jpg'),
+('Sonu Hits', 7, 2005, 'http://localhost:5000/images/album14.jpg'),
+('Stebin Hits', 13, 2020, 'http://localhost:5000/images/album15.jpg'),
+('Kishore Hits', 14, 1980, 'http://localhost:5000/images/album16.jpg'),
+('Nusrat Hits', 15, 1990, 'http://localhost:5000/images/album17.jpg');
 
 -- Tracks (NOW NO ERROR 🔥)
 INSERT INTO tracks (title, album_id, genre_id, duration, audio_url, image_url) VALUES
@@ -128,7 +141,6 @@ INSERT INTO tracks (title, album_id, genre_id, duration, audio_url, image_url) V
 ('Main Rahoon Ya Na Rahoon', 3, 3, '00:05:00', 'http://localhost:5000/songs/mainrahoon.mp3', 'http://localhost:5000/images/mainrahoon.jpg'),
 
 -- Atif Aslam (Album 4)
-('Jeena Jeena', 4, 1, '00:04:20', 'http://localhost:5000/songs/jeena.mp3', 'http://localhost:5000/images/jeena.jpg'),
 ('Pehli Nazar Mein', 4, 1, '00:05:10', 'http://localhost:5000/songs/pehli.mp3', 'http://localhost:5000/images/pehli.jpg'),
 
 -- KK (Album 5)
@@ -140,16 +152,46 @@ INSERT INTO tracks (title, album_id, genre_id, duration, audio_url, image_url) V
 ('Abhi Mujh Mein Kahin', 6, 1, '00:06:00', 'http://localhost:5000/songs/abhimujh.mp3', 'http://localhost:5000/images/abhimujh.jpg'),
 
 -- Jubin Nautiyal (Album 7)
-('Lut Gaye', 7, 1, '00:04:10', 'http://localhost:5000/songs/lutgaye.mp3', 'http://localhost:5000/images/lutgaye.jpg'),
+('Lut Gaye', 8, 1, '00:04:10', 'http://localhost:5000/songs/lutgaye.mp3', 'http://localhost:5000/images/lutgaye.jpg'),
 ('Tum Hi Aana', 7, 3, '00:04:20', 'http://localhost:5000/songs/tumhiaana.mp3', 'http://localhost:5000/images/tumhiaana.jpg'),
 
--- Diljit Dosanjh (Album 8)
-('Do You Know', 8, 8, '00:03:30', 'http://localhost:5000/songs/doyouknow.mp3', 'http://localhost:5000/images/doyouknow.jpg'),
-('Proper Patola', 8, 6, '00:03:20', 'http://localhost:5000/songs/proper.mp3', 'http://localhost:5000/images/proper.jpg'),
 
--- Badshah (Album 8 or new)
-('DJ Waley Babu', 8, 6, '00:03:10', 'http://localhost:5000/songs/djwaley.mp3', 'http://localhost:5000/images/djwaley.jpg'),
+-- Atif Aslam
+('Tera Hone Laga Hoon', 4, 1, '00:04:00', 'http://localhost:5000/songs/tera.mp3', 'http://localhost:5000/images/tera.jpg'),
+('Dil Diyan Gallan', 4, 1, '00:05:00', 'http://localhost:5000/songs/dilgalan.mp3', 'http://localhost:5000/images/dilgalan.jpg'),
 
+-- Arijit Singh
+('Dil Meri Na Sune', 1, 1, '00:04:30', 'http://localhost:5000/songs/dilmeri.mp3', 'http://localhost:5000/images/dilmeri.jpg'),
+('Sanam Ko Apna Banane', 1, 1, '00:05:00', 'http://localhost:5000/songs/sanam.mp3', 'http://localhost:5000/images/sanam.jpg'),
+
+-- Sonu Nigam
+('Tumhe Jo Maine Dekha', 7, 1, '00:05:20', 'http://localhost:5000/songs/tumhe.mp3', 'http://localhost:5000/images/tumhe.jpg'),
+
+-- Kumar Sanu
+('Us Ladki Pe Dil Aaya Hai', 11, 3, '00:05:00', 'http://localhost:5000/songs/usladki.mp3', 'http://localhost:5000/images/usladki.jpg'),
+('Pehli Pehli Baar Mohabbat Ki Hai', 11, 1, '00:04:40', 'http://localhost:5000/songs/pehlipheli.mp3', 'http://localhost:5000/images/pehlipheli.jpg'),
+
+-- A R Rahman
+('Dil Hai Chota Sa', 12, 2, '00:04:20', 'http://localhost:5000/songs/dilhchota.mp3', 'http://localhost:5000/images/dilhchota.jpg'),
+('Taal Se Taal Mila', 12, 2, '00:05:30', 'http://localhost:5000/songs/taal.mp3', 'http://localhost:5000/images/taal.jpg'),
+
+-- Stebin Ben
+('Tum Jo Aaye Yaara', 13, 1, '00:04:00', 'http://localhost:5000/songs/tumjoaye.mp3', 'http://localhost:5000/images/tumjoaye.jpg'),
+
+-- Kishore Kumar
+('Saiyaara Tu Badla Nahi (Old)', 14, 3, '00:05:10', 'http://localhost:5000/songs/saiyaara_old.mp3', 'http://localhost:5000/images/saiyaara_old.jpg'),
+
+-- Modern Version
+('Saiyaara Tu Badla Nahi (New)', 15, 1, '00:04:10', 'http://localhost:5000/songs/saiyaara_new.mp3', 'http://localhost:5000/images/saiyaara_new.jpg'),
+
+-- Others
+('Dheere Dheere Se', 4, 1, '00:05:00', 'http://localhost:5000/songs/dheere.mp3', 'http://localhost:5000/images/dheere.jpg'),
+('Pal Pal Jeena Muhal', 2, 1, '00:04:30', 'http://localhost:5000/songs/palpal.mp3', 'http://localhost:5000/images/palpal.jpg'),
+('Aap Ka Aana Dil Dhadkana', 11, 2, '00:05:00', 'http://localhost:5000/songs/aapka.mp3', 'http://localhost:5000/images/aapka.jpg'),
+
+-- Sufi
+('Afreen Afreen', 15, 2, '00:06:00', 'http://localhost:5000/songs/afreen.mp3', 'http://localhost:5000/images/afreen.jpg'),
+('Nit Khair Manga', 15, 2, '00:06:30', 'http://localhost:5000/songs/nitkhair.mp3', 'http://localhost:5000/images/nitkhair.jpg');
 
 
 -- Playlist
