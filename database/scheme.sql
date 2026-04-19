@@ -215,6 +215,16 @@ INSERT INTO playlist_tracks VALUES (1,1),(1,2);
 -- QUERIES
 -- ========================
 
+ALTER TABLE tracks ADD COLUMN artist_id INT;
+ALTER TABLE tracks ADD COLUMN artist_name VARCHAR(100);
+
+-- Make sure existing tracks don't break by populating them:
+UPDATE tracks t 
+JOIN albums a ON t.album_id = a.album_id 
+JOIN artists ar ON a.artist_id = ar.artist_id 
+SET t.artist_id = ar.artist_id, t.artist_name = ar.name;
+
+
 -- Search by title
 SELECT * FROM tracks WHERE title LIKE '%Tum%';
 

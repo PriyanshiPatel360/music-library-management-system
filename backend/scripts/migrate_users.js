@@ -1,4 +1,4 @@
-const db = require('./backend/db');
+const db = require('../db');
 
 db.query(`
     ALTER TABLE users
