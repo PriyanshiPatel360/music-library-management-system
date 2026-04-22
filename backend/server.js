@@ -130,7 +130,50 @@ app.get('/tracks', (req, res) => {
 
 app.get('/search', (req, res) => {
     const q = `%${req.query.q}%`;
-    db.query('SELECT * FROM tracks WHERE title LIKE ?', [q], (err, result) => {
+    const type = req.query.type || 'title';
+    
+    let query, params;
+    
+    if (type === 'artist') {
+        query = `
+            SELECT t.*, ar.name AS artist_name, g.name AS genre_name, al.title AS album_title
+            FROM tracks t
+            LEFT JOIN artists ar ON t.artist_id = ar.artist_id
+            LEFT JOIN genres g ON t.genre_id = g.genre_id
+            LEFT JOIN albums al ON t.album_id = al.album_id
+            WHERE ar.name LIKE ?
+            ORDER BY t.title
+            LIMIT 50
+        `;
+        params = [q];
+    } else if (type === 'genre') {
+        query = `
+            SELECT t.*, ar.name AS artist_name, g.name AS genre_name, al.title AS album_title
+            FROM tracks t
+            LEFT JOIN artists ar ON t.artist_id = ar.artist_id
+            LEFT JOIN genres g ON t.genre_id = g.genre_id
+            LEFT JOIN albums al ON t.album_id = al.album_id
+            WHERE g.name LIKE ?
+            ORDER BY t.title
+            LIMIT 50
+        `;
+        params = [q];
+    } else {
+        // default title
+        query = `
+            SELECT t.*, ar.name AS artist_name, g.name AS genre_name, al.title AS album_title
+            FROM tracks t
+            LEFT JOIN artists ar ON t.artist_id = ar.artist_id
+            LEFT JOIN genres g ON t.genre_id = g.genre_id
+            LEFT JOIN albums al ON t.album_id = al.album_id
+            WHERE t.title LIKE ?
+            ORDER BY t.title
+            LIMIT 50
+        `;
+        params = [q];
+    }
+    
+    db.query(query, params, (err, result) => {
         if (err) return res.json({ error: err.message });
         res.json(result);
     });
@@ -272,6 +315,47 @@ app.delete('/playlists/:id', (req, res) => {
     });
 });
 
+/* ---------------- ANALYTICS ---------------- */
+app.get('/analytics/popular-genre', (req, res) => {
+    db.query(`
+        SELECT g.name, COUNT(t.track_id) as count 
+        FROM tracks t 
+        JOIN genres g ON t.genre_id = g.genre_id 
+        GROUP BY g.genre_id, g.name 
+        ORDER BY count DESC 
+        LIMIT 3
+    `, (err, result) => {
+        if (err) return res.json({ error: err.message });
+        res.json({ popular_genres: result });
+    });
+});
+
+app.get('/analytics/songs-per-artist', (req, res) => {
+    db.query(`
+        SELECT ar.name, COUNT(t.track_id) as song_count 
+        FROM tracks t 
+        JOIN artists ar ON t.artist_id = ar.artist_id 
+        GROUP BY ar.artist_id, ar.name 
+        ORDER BY song_count DESC
+    `, (err, result) => {
+        if (err) return res.json({ error: err.message });
+        res.json({ songs_per_artist: result });
+    });
+});
+
+app.get('/analytics/playlist-counts', (req, res) => {
+    db.query(`
+        SELECT p.name, p.playlist_id, COUNT(pt.track_id) as song_count 
+        FROM playlists p 
+        LEFT JOIN playlist_tracks pt ON p.playlist_id = pt.playlist_id 
+        GROUP BY p.playlist_id, p.name 
+        ORDER BY song_count DESC
+    `, (err, result) => {
+        if (err) return res.json({ error: err.message });
+        res.json({ playlist_counts: result });
+    });
+});
+
 /* ---------------- ALBUM TRACKS ---------------- */
 
 app.get('/album/:id', (req, res) => {
@@ -365,4 +449,3 @@ app.put('/users/me', authMiddleware, (req, res) => {
 app.listen(5000, () => {
     console.log('Server running on http://localhost:5000');
 });
-

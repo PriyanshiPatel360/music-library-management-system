@@ -304,17 +304,19 @@ window.fillForm = function(track) {
     document.getElementById('trackImage').value = track.image_url || '';
 };
 
+window.currentSearchType = 'title';
+
 window.searchTracks = async function(query) {
     const container = document.getElementById('tracksContainer');
     if (!container) return;
 
     try {
-        const res = await fetch(`${API}/search?q=${encodeURIComponent(query)}`);
+        const res = await fetch(`${API}/search?q=${encodeURIComponent(query)}&type=${window.currentSearchType}`);
         const tracks = await res.json();
         
         container.innerHTML = tracks.map(track => {
             const safeTitle = track.title.replace(/'/g, "\\'");
-            const safeArtist = (track.artist || '').replace(/'/g, "\\'");
+            const safeArtist = (track.artist_name || track.artist || '').replace(/'/g, "\\'");
             return `
                 <div class="card" data-track-id="${track.track_id}">
                     <div class="cover-container">
@@ -322,7 +324,7 @@ window.searchTracks = async function(query) {
                         <button class="overlay-play-btn" onclick="playSongGlobal('${safeTitle}', '${safeArtist}', '${track.image_url || ''}', '${track.audio_url}'); event.stopPropagation();"><span class="material-symbols-outlined">play_arrow</span></button>
                     </div>
                     <h3>${track.title}</h3>
-                    <p>${track.artist} • ${track.album}</p>
+                    <p>${safeArtist} • ${track.album_title || track.album}</p>
                 </div>
             `;
         }).join('');
@@ -500,7 +502,7 @@ window.searchTracks = function(query) {
         suggestions.style.display = 'none';
         return;
       }
-      const res = await fetch(`${API}/search?q=${encodeURIComponent(query)}`);
+      const res = await fetch(`${API}/search?q=${encodeURIComponent(query)}&type=${window.currentSearchType}`);
       const tracks = await res.json();
       suggestions.style.display = 'flex';
       if(tracks.length === 0) {
@@ -513,6 +515,20 @@ window.searchTracks = function(query) {
     }
   }, 300);
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchTypeSelect = document.getElementById('searchType');
+    if (searchTypeSelect) {
+        searchTypeSelect.value = window.currentSearchType;
+        searchTypeSelect.addEventListener('change', function() {
+            window.currentSearchType = this.value;
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput.value.trim()) {
+                window.searchTracks(searchInput.value);
+            }
+        });
+    }
+});
 
 
 

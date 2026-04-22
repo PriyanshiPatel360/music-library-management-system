@@ -12,7 +12,7 @@ async function loadAlbumSongs() {
         const res = await fetch(`${API}/album/${id}`);
         const data = await res.json();
 
-        // 🧠 Empty state
+        //  Empty state
         if (!data || data.length === 0) {
             container.innerHTML = "<h2>No songs found in this album <span class='material-symbols-outlined'>music_note</span></h2>";
             return;

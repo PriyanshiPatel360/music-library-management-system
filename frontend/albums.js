@@ -1,6 +1,6 @@
 async function loadAlbums() {
 
-    // 🛑 Prevent error if page doesn't have albumsContainer
+    //  Prevent error if page doesn't have albumsContainer
     const container = document.getElementById("albumsContainer");
     if (!container) return;
 
@@ -8,7 +8,7 @@ async function loadAlbums() {
         const res = await fetch(`${API}/albums`);
         const data = await res.json();
 
-        // 🧠 Empty state
+        //  Empty state
         if (!data || data.length === 0) {
             container.innerHTML = "<h2>No albums found <span class='material-symbols-outlined'>music_note</span></h2>";
             return;
@@ -37,10 +37,10 @@ async function loadAlbums() {
     }
 }
 
-/* 🔗 OPEN ALBUM PAGE */
+
 function openAlbum(id) {
     window.location.href = `albumTracks.html?id=${id}`;
 }
 
-/* 🚀 INIT */
+
 loadAlbums();
