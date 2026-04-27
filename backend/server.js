@@ -439,6 +439,7 @@ app.put('/users/me', authMiddleware, (req, res) => {
         db.query('SELECT user_id, username, email, profile_image FROM users WHERE user_id=?', [userId], (err, result) => {
             if (err) return res.status(500).json({ error: err.message });
             const updatedUser = result[0];
+            if (!updatedUser) return res.status(401).json({ error: 'User not found' });
             const token = jwt.sign(updatedUser, JWT_SECRET, { expiresIn: '7d' });
             res.json({ message: 'Profile updated', token, user: updatedUser });
         });

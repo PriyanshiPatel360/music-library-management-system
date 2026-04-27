@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music Analytics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 Music Analytics</h1>
+        
+        <div class="analytics-section">
+            <h2>📊 Most Popular Genres</h2>
+            <div id="popular-genres" class="stats-grid"></div>
+        </div>
+        
+        <div class="analytics-section">
+            <h2>🎤 Songs per Artist</h2>
+            <div id="songs-per-artist" class="stats-list"></div>
+        </div>
+        
+        <div class="analytics-section">
+            <h2>📋 Playlist Song Counts</h2>
+            <div id="playlist-counts" class="stats-list"></div>
+        </div>
+        
+        <button onclick="loadAnalytics()" style="margin: 20px auto; display: block; padding: 10px 20px; font-size: 16px;">🔄 Refresh Analytics</button>
+    </div>
+    
+    <script src="analytics.js"></script>
+</body>
+</html>

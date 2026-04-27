@@ -19,13 +19,23 @@
 
     <main class="main">
         <header class="topbar">
-            <div class="search-container">
-<input type="text" id="searchInput" placeholder="What do you want to listen to?" autocomplete="off">
-                <select id="searchType">
-                    <option value="title">Title</option>
-                    <option value="artist">Artist</option>
-                    <option value="genre">Genre</option>
-                </select>
+            <div class="search-wrapper">
+                <div class="search-box">
+                    <span class="search-icon material-symbols-outlined">search</span>
+                    <input type="text" id="searchInput" placeholder="What do you want to listen to?" autocomplete="off">
+                </div>
+                <div class="custom-search-filter">
+                    <button id="searchTypeBtn" class="filter-btn">
+                        <span class="material-symbols-outlined filter-btn-icon">music_note</span>
+                        <span id="filterLabel">Title</span>
+                        <span class="filter-arrow material-symbols-outlined">expand_more</span>
+                    </button>
+                    <div id="filterPanel" class="filter-panel">
+                        <div class="filter-option" data-value="title"><span class="material-symbols-outlined">music_note</span>Title</div>
+                        <div class="filter-option" data-value="artist"><span class="material-symbols-outlined">person</span>Artist</div>
+                        <div class="filter-option" data-value="genre"><span class="material-symbols-outlined">palette</span>Genre</div>
+                    </div>
+                </div>
                 <div id="searchSuggestions"></div>
             </div>
             <div class="topbar-actions">
@@ -179,12 +189,19 @@
         </div>
     </div>
     <div class="player-right">
-        <select id="speedSelect" onchange="setSpeed(this.value)">
-            <option value="0.5">0.5x</option>
-            <option value="1" selected>1x</option>
-            <option value="1.5">1.5x</option>
-            <option value="2">2x</option>
-        </select>
+        <div class="speed-control">
+            <button class="speed-btn" id="speedBtn" onclick="toggleSpeedDropdown()">
+                <span class="material-symbols-outlined speed-icon">bolt</span>
+                <span class="speed-value" id="speedValue">1x</span>
+                <span class="material-symbols-outlined speed-arrow">expand_less</span>
+            </button>
+            <div class="speed-dropdown" id="speedDropdown">
+                <div class="speed-option" data-speed="0.5" onclick="selectSpeed('0.5')">0.5x</div>
+                <div class="speed-option active" data-speed="1" onclick="selectSpeed('1')">1x</div>
+                <div class="speed-option" data-speed="1.5" onclick="selectSpeed('1.5')">1.5x</div>
+                <div class="speed-option" data-speed="2" onclick="selectSpeed('2')">2x</div>
+            </div>
+        </div>
     </div>
 </footer>
 

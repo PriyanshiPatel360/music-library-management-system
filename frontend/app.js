@@ -98,6 +98,29 @@ window.setSpeed = function(speed) {
     }
 };
 
+window.toggleSpeedDropdown = function() {
+    const btn = document.getElementById('speedBtn');
+    const dropdown = document.getElementById('speedDropdown');
+    if (!btn || !dropdown) return;
+    btn.classList.toggle('active');
+    dropdown.classList.toggle('active');
+};
+
+window.selectSpeed = function(speed) {
+    window.setSpeed(speed);
+    const valueEl = document.getElementById('speedValue');
+    if (valueEl) valueEl.textContent = speed + 'x';
+    
+    document.querySelectorAll('.speed-option').forEach(opt => opt.classList.remove('active'));
+    const activeOpt = document.querySelector('.speed-option[data-speed="' + speed + '"]');
+    if (activeOpt) activeOpt.classList.add('active');
+    
+    const btn = document.getElementById('speedBtn');
+    const dropdown = document.getElementById('speedDropdown');
+    if (btn) btn.classList.remove('active');
+    if (dropdown) dropdown.classList.remove('active');
+};
+
 window.currentTrackList = [];
 window.currentTrackIndex = 0;
 
@@ -279,11 +302,14 @@ window.loadDropdowns = async function() {
         const genreSelect = document.getElementById('trackGenre');
         const artistSelect = document.getElementById('trackArtist');
         
-        albumSelect.innerHTML = '<option value="">Select Album</option>' + 
-            albums.map(a => `<option value="${a.album_id}">${a.title}</option>`).join('');
-        genreSelect.innerHTML = '<option value="">Select Genre</option>' + 
-            genres.map(g => `<option value="${g.genre_id}">${g.name}</option>`).join('');
-        
+        if (albumSelect) {
+            albumSelect.innerHTML = '<option value="">Select Album</option>' + 
+                albums.map(a => `<option value="${a.album_id}">${a.title}</option>`).join('');
+        }
+        if (genreSelect) {
+            genreSelect.innerHTML = '<option value="">Select Genre</option>' + 
+                genres.map(g => `<option value="${g.genre_id}">${g.name}</option>`).join('');
+        }
         if (artistSelect) {
             artistSelect.innerHTML = '<option value="">Select Artist</option>' + 
                 artists.map(ar => `<option value="${ar.artist_id}">${ar.name}</option>`).join('');
@@ -517,14 +543,43 @@ window.searchTracks = function(query) {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-    const searchTypeSelect = document.getElementById('searchType');
-    if (searchTypeSelect) {
-        searchTypeSelect.value = window.currentSearchType;
-        searchTypeSelect.addEventListener('change', function() {
-            window.currentSearchType = this.value;
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput.value.trim()) {
-                window.searchTracks(searchInput.value);
+    // Modern custom filter dropdown (searchTypeBtn/filterPanel)
+    const filterBtn = document.getElementById('searchTypeBtn');
+    const filterPanel = document.getElementById('filterPanel');
+    const filterOptions = document.querySelectorAll('.filter-option');
+    const filterLabel = document.getElementById('filterLabel');
+
+    if (filterBtn && filterPanel) {
+        const labelMap = { 'title': 'Title', 'artist': 'Artist', 'genre': 'Genre' };
+        const iconMap = { 'title': 'music_note', 'artist': 'person', 'genre': 'palette' };
+
+        filterBtn.addEventListener('click', () => {
+            filterBtn.classList.toggle('active');
+            filterPanel.classList.toggle('active');
+        });
+
+        filterOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                window.currentSearchType = option.dataset.value;
+
+                if (filterLabel) filterLabel.textContent = labelMap[window.currentSearchType] || 'Title';
+                const iconSpan = filterBtn.querySelector('.filter-btn-icon');
+                if (iconSpan) iconSpan.textContent = iconMap[window.currentSearchType] || 'music_note';
+
+                filterBtn.classList.remove('active');
+                filterPanel.classList.remove('active');
+
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput && searchInput.value.trim()) {
+                    if (window.searchTracks) window.searchTracks(searchInput.value);
+                }
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!filterBtn.contains(e.target) && !filterPanel.contains(e.target)) {
+                filterBtn.classList.remove('active');
+                filterPanel.classList.remove('active');
             }
         });
     }
@@ -556,3 +611,4 @@ window.addEventListener('DOMContentLoaded', () => {
         } catch(e) {}
     }
 });
+
